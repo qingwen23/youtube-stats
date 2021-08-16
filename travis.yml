@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - lts/*
+
+services: #build docker file into docker image (to be deployed on docker container)
+  - docker
+
+before_install:
+  - docker build -t qingwen23/reactapp -f Dockerfile .  #. is current directory
+
+# install:
+#   - docker run
+#   after-install:
+#     - docker push #push images into docker hub
+# before-script: #install dependencies
+
+
+script: #start of our build (run docker image before installation)
+  - docker run qingwen23/reactapp npm run test -- --coverage  #coverage - test package available in travis CI
+after_script:
